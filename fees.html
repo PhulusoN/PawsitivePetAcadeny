@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="Logo.png">
+    <link rel="stylesheet" href="style.css">
+    <title>Pawsitive Pet Academy - Fees & Discounts</title>
+</head>
+<body>
+
+  <!-- Modern Header / Navigation Bar -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="logo">
+        <a href="home.html">Pawsitive Pet Academy</a>
+      </div>
+      <nav class="navbar">
+        <ul class="nav-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="welcome.html">Services</a></li>
+          <li><a href="fees.html" class="active">Fees</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a href="contact.html" class="btn-cta-nav">Calculate Tuition</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fees Content Wrapper -->
+  <main class="fees-container">
+    
+    <header class="fees-page-header">
+      <span class="badge-tag discount-tag">Multi-Course Rewards</span>
+      <h1>Affordable Fees & Special Discounts</h1>
+      <p>We welcome individuals, families, pet sitters, kennel staff, veterinary assistants, and aspiring entrepreneurs. The more courses you select, the more savings you receive!</p>
+    </header>
+
+    <!-- Discount Scale Cards (Based on the text image layout) -->
+    <section class="discount-scale-grid">
+      <div class="discount-card tier-0">
+        <h3>1 Course</h3>
+        <div class="discount-rate">Standard Rate</div>
+        <p>No discount applied</p>
+      </div>
+      <div class="discount-card tier-5">
+        <h3>2 Courses</h3>
+        <div class="discount-rate">5% Off</div>
+        <p>Applied to your total tuition</p>
+      </div>
+      <div class="discount-card tier-10">
+        <h3>3 Courses</h3>
+        <div class="discount-rate">10% Off</div>
+        <p>Applied to your total tuition</p>
+      </div>
+      <div class="discount-card tier-15">
+        <h3>More than 3</h3>
+        <div class="discount-rate">15% Off</div>
+        <p>Max tier package bundle savings</p>
+      </div>
+    </section>
+
+    <!-- Interactive Interactive Calculator Widget Box -->
+    <section class="calculator-section">
+      <div class="calculator-card">
+        <h2>Interactive Fee Calculator</h2>
+        <p class="calc-subtitle">Select the courses you want to enroll in to instantly view your dynamic discount breakdown:</p>
+        
+        <div class="calculator-layout">
+          
+          <!-- Left: Selection Group -->
+          <div class="course-picker-panel">
+            <h3>6-Month Modules (R1,500 each)</h3>
+            <label class="checkbox-item">
+              <input type="checkbox" class="course-checkbox" data-price="1500" value="Canine Obedience">
+              <span>Canine Obedience Training</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" class="course-checkbox" data-price="1500" value="Pet Grooming">
+              <span>Pet Grooming</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" class="course-checkbox" data-price="1500" value="Animal Behaviour">
+              <span>Animal Behaviour</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" class="course-checkbox" data-price="1500" value="Pet Business">
+              <span>Pet Business Management</span>
+            </label>
+
+            <h3 style="margin-top: 25px;">6-Week Programs (R750 each)</h3>
+            <label class="checkbox-item">
+              <input type="checkbox" class="course-checkbox" data-price="750" value="Puppy Care">
+              <span>Puppy Care</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" class="course-checkbox" data-price="750" value="Pet First Aid">
+              <span>Pet First Aid</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" class="course-checkbox" data-price="750" value="Dog Walking">
+              <span>Basic Dog Walking</span>
+            </label>
+          </div>
+
+          <!-- Right: Dynamic Output Receipt -->
+          <div class="receipt-panel">
+            <h3>Tuition Summary</h3>
+            <div class="receipt-line">
+              <span>Selected Courses:</span>
+              <span id="receipt-count" class="receipt-bold">0</span>
+            </div>
+            <div class="receipt-line">
+              <span>Subtotal Cost:</span>
+              <span id="receipt-subtotal">R0.00</span>
+            </div>
+            <div class="receipt-line discount-line">
+              <span>Bundle Discount:</span>
+              <span id="receipt-discount">- R0.00 (0%)</span>
+            </div>
+            <hr class="receipt-divider">
+            <div class="receipt-line total-line">
+              <span>Final Total:</span>
+              <span id="receipt-total">R0.00</span>
+            </div>
+            <button class="btn-submit" style="margin-top: 15px;">Proceed to Enrollment</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Pawsitive Pet Academy. All rights reserved.</p>
+  </footer>
+
+  <!-- Live Calculator Logic Script -->
+  <script>
+    const checkboxes = document.querySelectorAll('.course-checkbox');
+    const countElement = document.getElementById('receipt-count');
+    const subtotalElement = document.getElementById('receipt-subtotal');
+    const discountElement = document.getElementById('receipt-discount');
+    const totalElement = document.getElementById('receipt-total');
+
+    checkboxes.forEach(box => {
+      box.addEventListener('change', calculateFees);
+    });
+
+    function calculateFees() {
+      let selectedCount = 0;
+      let subtotal = 0;
+
+      checkboxes.forEach(box => {
+        if (box.checked) {
+          selectedCount++;
+          subtotal += parseFloat(box.getAttribute('data-price'));
+        }
+      });
+
+     
+      let discountPercentage = 0;
+      if (selectedCount === 2) {
+        discountPercentage = 0.05;
+      } else if (selectedCount === 3) {
+        discountPercentage = 0.10;
+      } else if (selectedCount > 3) {
+        discountPercentage = 0.15;
+      }
+
+      let discountAmount = subtotal * discountPercentage;
+      let finalTotal = subtotal - discountAmount;
+
+      // Update DOM values beautifully
+      countElement.textContent = selectedCount;
+      subtotalElement.textContent = `R${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+      discountElement.textContent = `- R${discountAmount.toLocaleString(undefined, {minimumFractionDigits: 2})} (${discountPercentage * 100}%)`;
+      totalElement.textContent = `R${finalTotal.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+
+      // Visual color logic shift for savings
+      if (discountAmount > 0) {
+        discountElement.style.color = '#00cc22';
+      } else {
+        discountElement.style.color = 'var(--text-muted)';
+      }
+    }
+  </script>
+</body>
+</html>
